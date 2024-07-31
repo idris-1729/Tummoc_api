@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from models.teacher import Teacher, UpdateTeacher
-from crud.teacher import create_teacher, get_teacher, get_all_teachers, update_teacher, delete_teacher
+from crud.teacher import create_teacher, find_teacher, get_all_teachers, update_teacher, delete_teacher
 
 router = APIRouter()
 
@@ -13,7 +13,7 @@ async def create_new_teacher(teacher: Teacher):
 
 @router.get("/{teacher_id}", response_model=dict)
 async def read_teacher(teacher_id: int):
-    teacher = await get_teacher(teacher_id)
+    teacher = await find_teacher(teacher_id)
     if not teacher:
         raise HTTPException(status_code=404, detail="Teacher not found")
     return teacher
